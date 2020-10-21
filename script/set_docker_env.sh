@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#sudo apt-get install autogen autoconf libtool libeigen3-dev libhdf5-dev patchelf gfortran
-echo $1
-
-
-docker run -v "$PWD/../:/Trelis-plugin" -v "$2:/Trelis-sdk" -it $1 bash -c "/Trelis-plugin/script/build_plugin.sh $3"
+echo $0
+SCRIPTPATH=`dirname $(dirname $(realpath $0))`
+echo $SCRIPTPATH
+docker run -v "$SCRIPTPATH:/Trelis-plugin" -v "$2:/Trelis-sdk" -it $1 bash -c "ls /Trelis-plugin/script"
+docker run -v "$SCRIPTPATH:/Trelis-plugin" -v "$2:/Trelis-sdk" -it $1 bash -c "/Trelis-plugin/script/build_plugin.sh $3"

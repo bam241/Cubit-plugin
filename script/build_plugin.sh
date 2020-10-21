@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 cd /Trelis-sdk 
 dpkg -i Trelis-$1-Lin64.deb
 
@@ -104,8 +103,9 @@ patchelf --set-rpath /opt/Trelis-16.5/bin/plugins/svalinn libuwuw.so
 cd ..
 ln -sv svalinn/libsvalinn_plugin.so .
 cd ../..
-tar --sort=name -czvf svalinn-plugin.tgz bin
+tar --sort=name -czvf svalinn-plugin_linux_$1.tgz bin
 mv -v svalinn-plugin.tgz ..
 cd ..
 rm -rf pack bld DAGMC lib moab
 rm Trelis-plugin
+cp svalinn-plugin_linux_$1.tgz /Trelis-sdk
