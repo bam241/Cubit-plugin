@@ -104,8 +104,7 @@ cd ..
 ln -sv svalinn/libsvalinn_plugin.so .
 cd ../..
 tar --sort=name -czvf svalinn-plugin_linux_$1.tgz bin
-mv -v svalinn-plugin.tgz ..
+mv -v svalinn-plugin_linux_$1.tgz /Trelis-sdk
 cd ..
 rm -rf pack bld DAGMC lib moab
 rm Trelis-plugin
-cp svalinn-plugin_linux_$1.tgz /Trelis-sdk
