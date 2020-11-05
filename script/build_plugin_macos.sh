@@ -4,7 +4,7 @@
 
 # sudo installer -pkg MacPorts-2.6.3-10.15-Catalina.pkg -target /
 sudo port selfupdate
-sudo port install -y autogen autoconf libtool eigen3 hdf5 patchelf cmake gcc6 wget
+sudo port install autogen autoconf libtool eigen3 hdf5 patchelf cmake gcc6 wget
 
 wget https://github.com/fxcoudert/gfortran-for-macOS/releases/download/10.2/gfortran-10.2-Catalina.dmg
 
