@@ -1,6 +1,11 @@
 #!/bin/bash
 
-curl https://distfiles.macports.org/MacPorts/MacPorts-2.6.3-10.15-Catalina.pkg --output MacPorts-2.6.3-10.15-Catalina.pkg
+# curl https://distfiles.macports.org/MacPorts/MacPorts-2.6.3-10.15-Catalina.pkg --output MacPorts-2.6.3-10.15-Catalina.pkg
+
+# sudo installer -pkg MacPorts-2.6.3-10.15-Catalina.pkg -target /
+sudo port selfupdate
+sudo port install -y autogen autoconf libtool libeigen3-dev hdf5 patchelf gfortran cmake
+
 
 # cd /Trelis-sdk 
 # dpkg -i Trelis-$1-Lin64.deb
@@ -10,8 +15,6 @@ curl https://distfiles.macports.org/MacPorts/MacPorts-2.6.3-10.15-Catalina.pkg -
 # cd /opt/Trelis-16.5
 # tar -xzvf /Trelis-sdk/Trelis-SDK-$1-Lin64.tar.gz
 
-# apt-get update -y
-# apt-get install -y autogen autoconf libtool libeigen3-dev libhdf5-dev patchelf gfortran git cmake
 
 # cd 
 
