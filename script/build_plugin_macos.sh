@@ -47,7 +47,7 @@ cd ../bld
                   --disable-debug \
                   --disable-blaslapack \
                   --with-eigen3=/usr/include/eigen3 \
-                  --with-hdf5=/usr/lib/x86_64-linux-gnu/hdf5/serial \
+                  --with-hdf5=/opt/lib/ \
                   --prefix=${PLUGIN_ABS_PATH}/moab
 make -j`grep -c processor /proc/cpuinfo`
 make install
