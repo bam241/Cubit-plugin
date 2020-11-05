@@ -1,6 +1,6 @@
 #!/bin/bash
 
-curl https://distfiles.macports.org/MacPorts/MacPorts-2.6.3-10.12-Sierra.pkg --output MacPorts-2.6.3-10.12-Sierra.pkg
+curl https://distfiles.macports.org/MacPorts/MacPorts-2.6.3-10.15-Catalina.pkg --output MacPorts-2.6.3-10.15-Catalina.pkg
 
 # cd /Trelis-sdk 
 # dpkg -i Trelis-$1-Lin64.deb
