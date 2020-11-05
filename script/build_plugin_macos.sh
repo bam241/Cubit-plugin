@@ -3,7 +3,7 @@
 # curl https://distfiles.macports.org/MacPorts/MacPorts-2.6.3-10.15-Catalina.pkg --output MacPorts-2.6.3-10.15-Catalina.pkg
 
 # sudo installer -pkg MacPorts-2.6.3-10.15-Catalina.pkg -target /
-curl https://github.com/fxcoudert/gfortran-for-macOS/releases/download/10.2/gfortran-10.2-Catalina.dmg --ouput  gfortran-10.2-Catalina.dmg
+curl https://github.com/fxcoudert/gfortran-for-macOS/releases/download/10.2/gfortran-10.2-Catalina.dmg --outout  gfortran-10.2-Catalina.dmg
 sudo port selfupdate
 sudo port install -y autogen autoconf libtool eigen3 hdf5 patchelf cmake gcc6
 
