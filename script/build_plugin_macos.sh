@@ -19,16 +19,6 @@ sudo installer -pkg /Volumes/gfortran-10.2-Catalina/gfortran.pkg -target /
 hdiutil detach /Volumes/gfortran-10.2-Catalina
 
 
-c
-
-# cd /Trelis-sdk 
-# dpkg -i Trelis-$1-Lin64.deb
-
-# cd /opt
-# tar -xzvf /Trelis-sdk/Trelis-SDK-$1-Lin64.tar.gz
-# cd /opt/Trelis-16.5
-# tar -xzvf /Trelis-sdk/Trelis-SDK-$1-Lin64.tar.gz
-
 
 cd 
 
@@ -83,6 +73,17 @@ cmake ../DAGMC -DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
                -DCMAKE_INSTALL_PREFIX=${PLUGIN_ABS_PATH}/DAGMC
 make -j`grep -c processor /proc/cpuinfo`
 make install
+
+
+# cd /Trelis-sdk 
+# dpkg -i Trelis-$1-Lin64.deb
+
+ cd /opt
+ tar -xzvf /Users/mouginot/SDK/Trelis-SDK-17.1.0-Lin64.tar.gz
+ cd /opt/Trelis-16.5
+ tar -xzvf /Trelis-sdk/Trelis-SDK-17.1.0-Lin64.tar.gz
+
+
 
 cd ${PLUGIN_ABS_PATH}/Trelis-plugin
 git submodule update --init
