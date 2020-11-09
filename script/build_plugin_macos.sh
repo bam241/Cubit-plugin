@@ -18,6 +18,9 @@ hdiutil attach gfortran-10.2-Catalina.dmg
 sudo installer -pkg /Volumes/gfortran-10.2-Catalina/gfortran.pkg -target /
 hdiutil detach /Volumes/gfortran-10.2-Catalina
 
+
+wget https://uwmadison.box.com/shared/static/x011oqqt1z9di1g2acvj328k5xv9eva9.gz
+
 # cd /Trelis-sdk 
 # dpkg -i Trelis-$1-Lin64.deb
 
