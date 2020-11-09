@@ -7,6 +7,7 @@ sudo installer -pkg MacPorts-2.6.3-10.15-Catalina.pkg -target /
 
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export MANPATH=/opt/local/share/man:$MANPATH
+export LD_LIBRARY_PATH=/opt/local/lib:$LD_LIBRARY_PATH
 
 
 sudo port selfupdate
