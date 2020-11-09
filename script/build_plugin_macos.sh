@@ -1,88 +1,88 @@
 #!/bin/bash
 
-curl https://distfiles.macports.org/MacPorts/MacPorts-2.6.3-10.15-Catalina.pkg --output MacPorts-2.6.3-10.15-Catalina.pkg
+# curl https://distfiles.macports.org/MacPorts/MacPorts-2.6.3-10.15-Catalina.pkg --output MacPorts-2.6.3-10.15-Catalina.pkg
 
 
-sudo installer -pkg MacPorts-2.6.3-10.15-Catalina.pkg -target /
+# sudo installer -pkg MacPorts-2.6.3-10.15-Catalina.pkg -target /
 
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-export MANPATH=/opt/local/share/man:$MANPATH
-export LD_LIBRARY_PATH=/opt/local/lib:$LD_LIBRARY_PATH
-
-
-sudo port selfupdate
-sudo port install autogen autoconf libtool eigen3 hdf5 patchelf cmake gcc6 wget realpath
-
-wget https://github.com/fxcoudert/gfortran-for-macOS/releases/download/10.2/gfortran-10.2-Catalina.dmg
-hdiutil attach gfortran-10.2-Catalina.dmg
-sudo installer -pkg /Volumes/gfortran-10.2-Catalina/gfortran.pkg -target /
-hdiutil detach /Volumes/gfortran-10.2-Catalina
+# export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+# export MANPATH=/opt/local/share/man:$MANPATH
+# export LD_LIBRARY_PATH=/opt/local/lib:$LD_LIBRARY_PATH
 
 
-c
+# sudo port selfupdate
+# sudo port install autogen autoconf libtool eigen3 hdf5 patchelf cmake gcc6 wget realpath
 
-# cd /Trelis-sdk 
-# dpkg -i Trelis-$1-Lin64.deb
-
-# cd /opt
-# tar -xzvf /Trelis-sdk/Trelis-SDK-$1-Lin64.tar.gz
-# cd /opt/Trelis-16.5
-# tar -xzvf /Trelis-sdk/Trelis-SDK-$1-Lin64.tar.gz
+# wget https://github.com/fxcoudert/gfortran-for-macOS/releases/download/10.2/gfortran-10.2-Catalina.dmg
+# hdiutil attach gfortran-10.2-Catalina.dmg
+# sudo installer -pkg /Volumes/gfortran-10.2-Catalina/gfortran.pkg -target /
+# hdiutil detach /Volumes/gfortran-10.2-Catalina
 
 
-cd 
+# c
 
-# Setup
-CURRENT=$(pwd)
-SCRIPTPATH=`dirname $(dirname $(realpath $0))`
+# # cd /Trelis-sdk 
+# # dpkg -i Trelis-$1-Lin64.deb
 
-PLUGIN_DIR="plugin-build"
+# # cd /opt
+# # tar -xzvf /Trelis-sdk/Trelis-SDK-$1-Lin64.tar.gz
+# # cd /opt/Trelis-16.5
+# # tar -xzvf /Trelis-sdk/Trelis-SDK-$1-Lin64.tar.gz
 
-mkdir ${PLUGIN_DIR}
-PLUGIN_ABS_PATH=${CURRENT}/${PLUGIN_DIR}
 
-echo "Building the Trelis plugin in ${CURRENT}\\${PLUGIN_DIR}"
+# cd 
 
-unset LD_LIBRARY_PATH
+# # Setup
+# CURRENT=$(pwd)
+# SCRIPTPATH=`dirname $(dirname $(realpath $0))`
 
-cd ${PLUGIN_ABS_PATH}
-ln -s $SCRIPTPATH/ ./
+# PLUGIN_DIR="plugin-build"
 
-mkdir -pv moab/bld
-cd moab
-git clone https://bitbucket.org/fathomteam/moab -b Version5.1.0
-cd moab
-autoreconf -fi
-cd ../bld
-../moab/configure CXXFLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
-                  --disable-blaslapack \
-                  --enable-shared \
-                  --enable-optimize \
-                  --disable-debug \
-                  --disable-blaslapack \
-                  --with-eigen3=/opt/local/include/eigen3 \
-                  --with-hdf5=/opt/local/ \
-                  --prefix=${PLUGIN_ABS_PATH}/moab
-make -j`grep -c processor /proc/cpuinfo`
-make install
+# mkdir ${PLUGIN_DIR}
+# PLUGIN_ABS_PATH=${CURRENT}/${PLUGIN_DIR}
 
-cd ${PLUGIN_ABS_PATH}
-mkdir -pv DAGMC/bld
-cd DAGMC
-git clone https://github.com/svalinn/DAGMC -b develop
-cd bld
-cmake ../DAGMC -DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
-               -DMOAB_DIR=${PLUGIN_ABS_PATH}/moab \
-               -DBUILD_UWUW=ON \
-               -DBUILD_TALLY=OFF \
-               -DBUILD_BUILD_OBB=OFF \
-               -DBUILD_MAKE_WATERTIGHT=ON \
-               -DBUILD_SHARED_LIBS=ON \
-               -DBUILD_STATIC_LIBS=OFF \
-               -DCMAKE_BUILD_TYPE=Release \
-               -DCMAKE_INSTALL_PREFIX=${PLUGIN_ABS_PATH}/DAGMC
-make -j`grep -c processor /proc/cpuinfo`
-make install
+# echo "Building the Trelis plugin in ${CURRENT}\\${PLUGIN_DIR}"
+
+# unset LD_LIBRARY_PATH
+
+# cd ${PLUGIN_ABS_PATH}
+# ln -s $SCRIPTPATH/ ./
+
+# mkdir -pv moab/bld
+# cd moab
+# git clone https://bitbucket.org/fathomteam/moab -b Version5.1.0
+# cd moab
+# autoreconf -fi
+# cd ../bld
+# ../moab/configure CXXFLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
+#                   --disable-blaslapack \
+#                   --enable-shared \
+#                   --enable-optimize \
+#                   --disable-debug \
+#                   --disable-blaslapack \
+#                   --with-eigen3=/opt/local/include/eigen3 \
+#                   --with-hdf5=/opt/local/ \
+#                   --prefix=${PLUGIN_ABS_PATH}/moab
+# make -j`grep -c processor /proc/cpuinfo`
+# make install
+
+# cd ${PLUGIN_ABS_PATH}
+# mkdir -pv DAGMC/bld
+# cd DAGMC
+# git clone https://github.com/svalinn/DAGMC -b develop
+# cd bld
+# cmake ../DAGMC -DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
+#                -DMOAB_DIR=${PLUGIN_ABS_PATH}/moab \
+#                -DBUILD_UWUW=ON \
+#                -DBUILD_TALLY=OFF \
+#                -DBUILD_BUILD_OBB=OFF \
+#                -DBUILD_MAKE_WATERTIGHT=ON \
+#                -DBUILD_SHARED_LIBS=ON \
+#                -DBUILD_STATIC_LIBS=OFF \
+#                -DCMAKE_BUILD_TYPE=Release \
+#                -DCMAKE_INSTALL_PREFIX=${PLUGIN_ABS_PATH}/DAGMC
+# make -j`grep -c processor /proc/cpuinfo`
+# make install
 
 TRELIS_SDK_URL="https://uwmadison.box.com/shared/static/x011oqqt1z9di1g2acvj328k5xv9eva9.gz"
 url https://api.box.com/2.0/shared_items?fields=type,id -H "Authorization: Bearer ACCESS_TOKEN" -H "BoxApi: shared_link=$TRELIS_SDK_URL"
