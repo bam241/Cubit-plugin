@@ -14,6 +14,7 @@ sudo port install autogen autoconf libtool eigen3 hdf5 patchelf cmake gcc6 wget
 
 wget https://github.com/fxcoudert/gfortran-for-macOS/releases/download/10.2/gfortran-10.2-Catalina.dmg
 hdiutil attach gfortran-10.2-Catalina.dmg
+sudo installer -pkg /Volume/gfortran-10.2-Catalina/gfortran.pkg -target /
 
 
 # cd /Trelis-sdk 
@@ -25,41 +26,41 @@ hdiutil attach gfortran-10.2-Catalina.dmg
 # tar -xzvf /Trelis-sdk/Trelis-SDK-$1-Lin64.tar.gz
 
 
-# cd 
+cd 
 
 # Setup
-# CURRENT=$(pwd)
-# SCRIPTPATH=`dirname $(dirname $(realpath $0))`
+CURRENT=$(pwd)
+SCRIPTPATH=`dirname $(dirname $(realpath $0))`
 
-# PLUGIN_DIR="plugin-build"
+PLUGIN_DIR="plugin-build"
 
-# mkdir ${PLUGIN_DIR}
-# PLUGIN_ABS_PATH=${CURRENT}/${PLUGIN_DIR}
+mkdir ${PLUGIN_DIR}
+PLUGIN_ABS_PATH=${CURRENT}/${PLUGIN_DIR}
 
-# echo "Building the Trelis plugin in ${CURRENT}\\${PLUGIN_DIR}"
+echo "Building the Trelis plugin in ${CURRENT}\\${PLUGIN_DIR}"
 
-# unset LD_LIBRARY_PATH
+unset LD_LIBRARY_PATH
 
-# cd ${PLUGIN_ABS_PATH}
-# ln -s $SCRIPTPATH/ ./
+cd ${PLUGIN_ABS_PATH}
+ln -s $SCRIPTPATH/ ./
 
-# mkdir -pv moab/bld
-# cd moab
-# git clone https://bitbucket.org/fathomteam/moab -b Version5.1.0
-# cd moab
-# autoreconf -fi
-# cd ../bld
-# ../moab/configure CXXFLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
-#                   --disable-blaslapack \
-#                   --enable-shared \
-#                   --enable-optimize \
-#                   --disable-debug \
-#                   --disable-blaslapack \
-#                   --with-eigen3=/usr/include/eigen3 \
-#                   --with-hdf5=/opt/lib/ \
-#                   --prefix=${PLUGIN_ABS_PATH}/moab
-# make -j`grep -c processor /proc/cpuinfo`
-# make install
+mkdir -pv moab/bld
+cd moab
+git clone https://bitbucket.org/fathomteam/moab -b Version5.1.0
+cd moab
+autoreconf -fi
+cd ../bld
+../moab/configure CXXFLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
+                  --disable-blaslapack \
+                  --enable-shared \
+                  --enable-optimize \
+                  --disable-debug \
+                  --disable-blaslapack \
+                  --with-eigen3=/usr/include/eigen3 \
+                  --with-hdf5=/opt/lib/ \
+                  --prefix=${PLUGIN_ABS_PATH}/moab
+make -j`grep -c processor /proc/cpuinfo`
+make install
 
 # cd ${PLUGIN_ABS_PATH}
 # mkdir -pv DAGMC/bld
