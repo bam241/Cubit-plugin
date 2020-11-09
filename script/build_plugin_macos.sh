@@ -43,7 +43,7 @@ echo "Building the Trelis plugin in ${CURRENT}\\${PLUGIN_DIR}"
 unset LD_LIBRARY_PATH
 
 cd ${PLUGIN_ABS_PATH}
-ln -s $SCRIPTPATH/ ./
+#ln -s $SCRIPTPATH/ ./
 
 mkdir -pv moab/bld
 cd moab
