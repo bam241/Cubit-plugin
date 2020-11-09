@@ -7,6 +7,8 @@ sudo port selfupdate
 sudo port install autogen autoconf libtool eigen3 hdf5 patchelf cmake gcc6 wget
 
 wget https://github.com/fxcoudert/gfortran-for-macOS/releases/download/10.2/gfortran-10.2-Catalina.dmg
+hdiutil attach gfortran-10.2-Catalina.dmg
+
 
 # cd /Trelis-sdk 
 # dpkg -i Trelis-$1-Lin64.deb
