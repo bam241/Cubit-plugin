@@ -19,7 +19,7 @@ sudo installer -pkg /Volumes/gfortran-10.2-Catalina/gfortran.pkg -target /
 hdiutil detach /Volumes/gfortran-10.2-Catalina
 
 
-wget https://uwmadison.box.com/shared/static/x011oqqt1z9di1g2acvj328k5xv9eva9.gz
+c
 
 # cd /Trelis-sdk 
 # dpkg -i Trelis-$1-Lin64.deb
@@ -84,6 +84,8 @@ cmake ../DAGMC -DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
 make -j`grep -c processor /proc/cpuinfo`
 make install
 
+TRELIS_SDK_URL="https://uwmadison.box.com/shared/static/x011oqqt1z9di1g2acvj328k5xv9eva9.gz"
+url https://api.box.com/2.0/shared_items?fields=type,id -H "Authorization: Bearer ACCESS_TOKEN" -H "BoxApi: shared_link=$TRELIS_SDK_URL"
 
 # cd ${PLUGIN_ABS_PATH}/Trelis-plugin
 # git submodule update --init
