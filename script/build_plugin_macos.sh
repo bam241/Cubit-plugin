@@ -85,7 +85,7 @@
 # make install
 
 TRELIS_SDK_URL="https://uwmadison.box.com/shared/static/x011oqqt1z9di1g2acvj328k5xv9eva9.gz"
-url https://api.box.com/2.0/shared_items?fields=type,id -H "Authorization: Bearer ACCESS_TOKEN" -H "BoxApi: shared_link=$TRELIS_SDK_URL"
+curl https://api.box.com/2.0/shared_items?fields=type,id -H "Authorization: Bearer ACCESS_TOKEN" -H "BoxApi: shared_link=$TRELIS_SDK_URL"
 
 # cd ${PLUGIN_ABS_PATH}/Trelis-plugin
 # git submodule update --init
