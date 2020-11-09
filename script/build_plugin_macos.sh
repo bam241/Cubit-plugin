@@ -2,7 +2,13 @@
 
 curl https://distfiles.macports.org/MacPorts/MacPorts-2.6.3-10.15-Catalina.pkg --output MacPorts-2.6.3-10.15-Catalina.pkg
 
+
 sudo installer -pkg MacPorts-2.6.3-10.15-Catalina.pkg -target /
+
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+export MANPATH=/opt/local/share/man:$MANPATH
+
+
 sudo port selfupdate
 sudo port install autogen autoconf libtool eigen3 hdf5 patchelf cmake gcc6 wget
 
