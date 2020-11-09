@@ -11,7 +11,7 @@ export LD_LIBRARY_PATH=/opt/local/lib:$LD_LIBRARY_PATH
 
 
 sudo port selfupdate
-sudo port install autogen autoconf libtool eigen3 hdf5 patchelf cmake gcc6 wget
+sudo port install autogen autoconf libtool eigen3 hdf5 patchelf cmake gcc6 wget realpath
 
 wget https://github.com/fxcoudert/gfortran-for-macOS/releases/download/10.2/gfortran-10.2-Catalina.dmg
 hdiutil attach gfortran-10.2-Catalina.dmg
@@ -43,7 +43,7 @@ echo "Building the Trelis plugin in ${CURRENT}\\${PLUGIN_DIR}"
 unset LD_LIBRARY_PATH
 
 cd ${PLUGIN_ABS_PATH}
-#ln -s $SCRIPTPATH/ ./
+ln -s $SCRIPTPATH/ ./
 
 mkdir -pv moab/bld
 cd moab
@@ -63,23 +63,23 @@ cd ../bld
 make -j`grep -c processor /proc/cpuinfo`
 make install
 
-# cd ${PLUGIN_ABS_PATH}
-# mkdir -pv DAGMC/bld
-# cd DAGMC
-# git clone https://github.com/svalinn/DAGMC -b develop
-# cd bld
-# cmake ../DAGMC -DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
-#                -DMOAB_DIR=${PLUGIN_ABS_PATH}/moab \
-#                -DBUILD_UWUW=ON \
-#                -DBUILD_TALLY=OFF \
-#                -DBUILD_BUILD_OBB=OFF \
-#                -DBUILD_MAKE_WATERTIGHT=ON \
-#                -DBUILD_SHARED_LIBS=ON \
-#                -DBUILD_STATIC_LIBS=OFF \
-#                -DCMAKE_BUILD_TYPE=Release \
-#                -DCMAKE_INSTALL_PREFIX=${PLUGIN_ABS_PATH}/DAGMC
-# make -j`grep -c processor /proc/cpuinfo`
-# make install
+cd ${PLUGIN_ABS_PATH}
+mkdir -pv DAGMC/bld
+cd DAGMC
+git clone https://github.com/svalinn/DAGMC -b develop
+cd bld
+cmake ../DAGMC -DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
+               -DMOAB_DIR=${PLUGIN_ABS_PATH}/moab \
+               -DBUILD_UWUW=ON \
+               -DBUILD_TALLY=OFF \
+               -DBUILD_BUILD_OBB=OFF \
+               -DBUILD_MAKE_WATERTIGHT=ON \
+               -DBUILD_SHARED_LIBS=ON \
+               -DBUILD_STATIC_LIBS=OFF \
+               -DCMAKE_BUILD_TYPE=Release \
+               -DCMAKE_INSTALL_PREFIX=${PLUGIN_ABS_PATH}/DAGMC
+make -j`grep -c processor /proc/cpuinfo`
+make install
 
 
 # cd ${PLUGIN_ABS_PATH}/Trelis-plugin
