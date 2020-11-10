@@ -94,7 +94,7 @@ cd bld
 ls /opt/Trelis-${1::4}
 ls /opt/Trelis-*
 ls /opt
-cmake ../Trelis-plugin -DCUBIT_ROOT=/Users/mouginot/SDK/Trelis-17.1/Trelis-17.1.app \
+cmake ../Trelis-plugin -DCUBIT_ROOT=/Users/mouginot/SDK/Trelis-17.1/Trelis-17.1.app/Contents/MacOS \
                        -DDAGMC_DIR=${PLUGIN_ABS_PATH}/DAGMC \
                        -DCMAKE_BUILD_TYPE=Release \
                        -DCMAKE_INSTALL_PREFIX=${PLUGIN_ABS_PATH}
