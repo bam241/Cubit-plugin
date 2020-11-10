@@ -78,7 +78,7 @@ make install
 # cd /Trelis-sdk 
 # dpkg -i Trelis-$1-Lin64.deb
 
- cd /opt
+ cd /Users/mouginot/SDK/
  tar -xzvf /Users/mouginot/SDK/Trelis-SDK-17.1.0-Lin64.tar.gz
  cd /opt/Trelis-16.5
  tar -xzvf /Trelis-sdk/Trelis-SDK-17.1.0-Lin64.tar.gz
@@ -94,7 +94,7 @@ cd bld
 ls /opt/Trelis-${1::4}
 ls /opt/Trelis-*
 ls /opt
-cmake ../Trelis-plugin -DCUBIT_ROOT=/opt/Trelis-${1::4} \
+cmake ../Trelis-plugin -DCUBIT_ROOT=/Users/mouginot/SDKTrelis-17.1 \
                        -DDAGMC_DIR=${PLUGIN_ABS_PATH}/DAGMC \
                        -DCMAKE_BUILD_TYPE=Release \
                        -DCMAKE_INSTALL_PREFIX=${PLUGIN_ABS_PATH}
