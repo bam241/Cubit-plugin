@@ -82,7 +82,7 @@ make install
  tar -xzvf /Users/mouginot/SDK/Trelis-SDK-17.1.0-Lin64.tar.gz
  cd /opt/Trelis-16.5
  tar -xzvf /Trelis-sdk/Trelis-SDK-17.1.0-Lin64.tar.gz
-
+# https://uwmadison.box.com/shared/static/vr4wqavt2xlgv4cpc2fqk47yao0nm503.dmg
 
 
 cd ${PLUGIN_ABS_PATH}/Trelis-plugin
