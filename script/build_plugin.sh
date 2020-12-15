@@ -1,15 +1,19 @@
 #!/bin/bash
+export TZ=America/Chicago
+ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+apt-get update
 cd /Trelis-sdk 
-dpkg -i Trelis-$1-Lin64.deb
+dpkg -i Coreform-Cubit-2020.2-Lin64.deb
+apt-get --fix-broken install -y
+
 
 cd /opt
-tar -xzvf /Trelis-sdk/Trelis-SDK-$1-Lin64.tar.gz
-cd /opt/Trelis-16.5
-tar -xzvf /Trelis-sdk/Trelis-SDK-$1-Lin64.tar.gz
+tar -xzvf /Trelis-sdk/Trelis-SDK-17.1.0-Lin64.tar.gz
+cp -r Trelis-17.1/* ./Coreform-Cubit-2020.2/
 
 apt-get update -y
-apt-get install -y autogen autoconf libtool libeigen3-dev libhdf5-dev patchelf gfortran git cmake
+apt-get install -y gcc g++ autogen autoconf libtool libeigen3-dev libhdf5-dev patchelf gfortran git cmake
 
 cd 
 
@@ -35,8 +39,7 @@ git clone https://bitbucket.org/fathomteam/moab -b Version5.1.0
 cd moab
 autoreconf -fi
 cd ../bld
-../moab/configure CXXFLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
-                  --disable-blaslapack \
+../moab/configure --disable-blaslapack \
                   --enable-shared \
                   --enable-optimize \
                   --disable-debug \
@@ -52,8 +55,7 @@ mkdir -pv DAGMC/bld
 cd DAGMC
 git clone https://github.com/svalinn/DAGMC -b develop
 cd bld
-cmake ../DAGMC -DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
-               -DMOAB_DIR=${PLUGIN_ABS_PATH}/moab \
+cmake ../DAGMC -DMOAB_DIR=${PLUGIN_ABS_PATH}/moab \
                -DBUILD_UWUW=ON \
                -DBUILD_TALLY=OFF \
                -DBUILD_BUILD_OBB=OFF \
@@ -72,20 +74,12 @@ git submodule update --init
 cd ${PLUGIN_ABS_PATH}
 mkdir -pv bld
 cd bld
-ls /opt/Trelis-${1::4}
-ls /opt/Trelis-*
-ls /opt
-cmake ../Trelis-plugin -DCUBIT_ROOT=/opt/Trelis-${1::4} \
+cmake ../Trelis-plugin -DCUBIT_ROOT=/opt/./Coreform-Cubit-2020.2 \
                        -DDAGMC_DIR=${PLUGIN_ABS_PATH}/DAGMC \
                        -DCMAKE_BUILD_TYPE=Release \
                        -DCMAKE_INSTALL_PREFIX=${PLUGIN_ABS_PATH}
 make -j`grep -c processor /proc/cpuinfo`
 make install
-echo " cmake ../Trelis-plugin -DCubit_DIR=/opt/Trelis-${1::4} \
-                       -DCUBIT_ROOT=/opt/Trelis-${1::4} \
-                       -DDAGMC_DIR=${PLUGIN_ABS_PATH}/DAGMC \
-                       -DCMAKE_BUILD_TYPE=Release \
-                       -DCMAKE_INSTALL_PREFIX=${PLUGIN_ABS_PATH} "
 
 cd ${PLUGIN_ABS_PATH}
 mkdir -p pack/bin/plugins/svalinn
@@ -98,22 +92,22 @@ cp -pPv ${PLUGIN_ABS_PATH}/DAGMC/lib/libdagmc.so* .
 cp -pPv ${PLUGIN_ABS_PATH}/DAGMC/lib/libmakeWatertight.so* .
 cp -pPv ${PLUGIN_ABS_PATH}/DAGMC/lib/libpyne_dagmc.so .
 cp -pPv ${PLUGIN_ABS_PATH}/DAGMC/lib/libuwuw.so .
-cp -pPv /usr/lib/x86_64-linux-gnu/libhdf5_serial.so.100* .
+cp -pPv /usr/lib/x86_64-linux-gnu/libhdf5_serial.so* .
 chmod 644 *
 
 # Set the RPATH to be the current directory for the DAGMC libraries
-patchelf --set-rpath /opt/Trelis-${1::4}/bin/plugins/svalinn libMOAB.so
-patchelf --set-rpath /opt/Trelis-${1::4}/bin/plugins/svalinn libdagmc.so
-patchelf --set-rpath /opt/Trelis-${1::4}/bin/plugins/svalinn libmakeWatertight.so
-patchelf --set-rpath /opt/Trelis-${1::4}/bin/plugins/svalinn libpyne_dagmc.so
-patchelf --set-rpath /opt/Trelis-${1::4}/bin/plugins/svalinn libuwuw.so
+patchelf --set-rpath /opt/Coreform-Cubit-2020.2/bin/plugins/svalinn libMOAB.so
+patchelf --set-rpath /opt/Coreform-Cubit-2020.2/bin/plugins/svalinn libdagmc.so
+patchelf --set-rpath /opt/Coreform-Cubit-2020.2/bin/plugins/svalinn libmakeWatertight.so
+patchelf --set-rpath /opt/Coreform-Cubit-2020.2/bin/plugins/svalinn libpyne_dagmc.so
+patchelf --set-rpath /opt/Coreform-Cubit-2020.2/bin/plugins/svalinn libuwuw.so
 
 # Create the Svalinn plugin tarball
 cd ..
 ln -sv svalinn/libsvalinn_plugin.so .
 cd ../..
-tar --sort=name -czvf svalinn-plugin_linux_$1.tgz bin
-mv -v svalinn-plugin_linux_$1.tgz /Trelis-sdk
+tar --sort=name -czvf svalinn-plugin_linux_cubit_2020.2.tgz bin
+mv -v svalinn-plugin_linux_cubit_2020.2.tgz /Trelis-sdk
 cd ..
 rm -rf pack bld DAGMC lib moab
 rm Trelis-plugin
