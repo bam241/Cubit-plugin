@@ -101,6 +101,7 @@ patchelf --set-rpath /opt/Coreform-Cubit-2020.2/bin/plugins/svalinn libdagmc.so
 patchelf --set-rpath /opt/Coreform-Cubit-2020.2/bin/plugins/svalinn libmakeWatertight.so
 patchelf --set-rpath /opt/Coreform-Cubit-2020.2/bin/plugins/svalinn libpyne_dagmc.so
 patchelf --set-rpath /opt/Coreform-Cubit-2020.2/bin/plugins/svalinn libuwuw.so
+patchelf --set-rpath /opt/Coreform-Cubit-2020.2/bin/plugins libsvalinn_plugin.so
 
 # Create the Svalinn plugin tarball
 cd ..
