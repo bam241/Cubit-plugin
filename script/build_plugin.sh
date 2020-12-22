@@ -8,8 +8,10 @@ tar -xzvf /Trelis-sdk/Trelis-SDK-$1-Lin64.tar.gz
 cd /opt/Trelis-16.5
 tar -xzvf /Trelis-sdk/Trelis-SDK-$1-Lin64.tar.gz
 
+TZ=America/Chicago
+ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 apt-get update -y
-apt-get install -y autogen autoconf libtool libeigen3-dev libhdf5-dev patchelf gfortran git cmake
+apt-get install -y g++ autogen autoconf libtool libeigen3-dev libhdf5-dev patchelf gfortran git cmake
 
 cd 
 
@@ -33,24 +35,30 @@ mkdir -pv moab/bld
 cd moab
 git clone https://bitbucket.org/fathomteam/moab -b Version5.1.0
 cd moab
-autoreconf -fi
+#autoreconf -fi
 cd ../bld
-../moab/configure CXXFLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
-                  --disable-blaslapack \
-                  --enable-shared \
-                  --enable-optimize \
-                  --disable-debug \
-                  --disable-blaslapack \
-                  --with-eigen3=/usr/include/eigen3 \
-                  --with-hdf5=/usr/lib/x86_64-linux-gnu/hdf5/serial \
-                  --prefix=${PLUGIN_ABS_PATH}/moab
+cmake ../moab -DENABLE_HDF5=ON \
+          -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/hdf5/serial \
+          -DBUILD_SHARED_LIBS=OFF \
+          -DENABLE_BLASLAPACK=OFF -DENABLE_FORTRAN=OFF -DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
+          -DCMAKE_INSTALL_PREFIX=${PLUGIN_ABS_PATH}/moab
+
+#../moab/configure CXXFLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
+#                  --disable-blaslapack \
+#                  --enable-shared \
+#                  --enable-optimize \
+#                  --disable-debug \
+#                  --disable-blaslapack \
+#                  --with-eigen3=/usr/include/eigen3 \
+#                  --with-hdf5=/usr/lib/x86_64-linux-gnu/hdf5/serial \
+#                  --prefix=${PLUGIN_ABS_PATH}/moab
 make -j`grep -c processor /proc/cpuinfo`
 make install
 
 cd ${PLUGIN_ABS_PATH}
 mkdir -pv DAGMC/bld
 cd DAGMC
-git clone https://github.com/svalinn/DAGMC -b develop
+git clone https://github.com/bam241/DAGMC -b build_exe
 cd bld
 cmake ../DAGMC -DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
                -DMOAB_DIR=${PLUGIN_ABS_PATH}/moab \
@@ -58,8 +66,9 @@ cmake ../DAGMC -DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 \
                -DBUILD_TALLY=OFF \
                -DBUILD_BUILD_OBB=OFF \
                -DBUILD_MAKE_WATERTIGHT=ON \
-               -DBUILD_SHARED_LIBS=ON \
-               -DBUILD_STATIC_LIBS=OFF \
+               -DBUILD_SHARED_LIBS=OFF \
+               -DBUILD_STATIC_LIBS=ON \
+               -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
                -DCMAKE_BUILD_TYPE=Release \
                -DCMAKE_INSTALL_PREFIX=${PLUGIN_ABS_PATH}/DAGMC
 make -j`grep -c processor /proc/cpuinfo`
@@ -115,5 +124,5 @@ cd ../..
 tar --sort=name -czvf svalinn-plugin_linux_$1.tgz bin
 mv -v svalinn-plugin_linux_$1.tgz /Trelis-sdk
 cd ..
-rm -rf pack bld DAGMC lib moab
-rm Trelis-plugin
+#rm -rf pack bld DAGMC lib moab
+#rm Trelis-plugin
