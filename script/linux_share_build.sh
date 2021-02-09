@@ -38,6 +38,13 @@ function setup_Trelis_sdk() {
     apt-get -f -y install 
     cd /opt
     tar -xzvf ${FOLDER_PKG}/${TRELIS_SDK_PKG}
+    if [ "$1" = "2020.2" ]; then
+        cd $TRELIS_PATH/bin
+        cp -pv CubitExport.cmake CubitExport.cmake.orig
+        sed -i "s/\"\/\.\.\/app_logger\"/\"\"/" CubitExport.cmake
+        cp -pv CubitUtilConfig.cmake CubitUtilConfig.cmake.orig
+        sed -i "s/\/\.\.\/app_logger\;//" CubitUtilConfig.cmake
+    fi
 }
 
 
