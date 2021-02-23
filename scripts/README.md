@@ -22,3 +22,5 @@ Linux (tested on Ubuntu 18.04 and 20.04):
         - 1 docker image (tested on `ubuntu:18.04` and `ubuntu:20.04`)
         - 2 local path to the folder containing the Trelis/Cubit install deb and SDK
         - 3 version of Cubit Trelis to build the plugin for (only tested with `17.1.0`)
+
+Adding some new files
