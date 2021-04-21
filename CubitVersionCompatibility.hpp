@@ -1,3 +1,4 @@
+
 #ifndef SVALINN_COMPATIBILITY_HPP
 #define SVALINN_COMPATIBILITY_HPP
 
@@ -8,6 +9,7 @@
     #define MSG_HANDLER CubitInterface::get_cubit_message_handler()
 #else
     #define CUBIT_INTERFACE_HEADER "CubitCoreformInterface.hpp"
+    #define CUBIT_INTERFACE_HEADER "CubitMessage.hpp"
     #define MSG_HANDLER CubitMessage::get_message_handler()
 #endif
 

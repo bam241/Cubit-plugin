@@ -106,8 +106,9 @@ function build_dagmc(){
 function setup_Trelis_sdk() {
 
     cd ${FOLDER_PKG}
-    $SUDO apt-get install -y ./${TRELIS_PKG}
+    #$SUDO apt-get install -y ./${TRELIS_PKG}
     cd /opt
+    $SUDO tar -xvf ${FOLDER_PKG}/Coreform-Cubit-2020.2-Cen7.tar
     $SUDO tar -xzvf ${FOLDER_PKG}/${TRELIS_SDK_PKG}
     # removing app_loger that seems to not be present in Cubit 2020.2
     if [ "$1" = "2020.2" ]; then
