@@ -11,7 +11,9 @@ on:
     branches:
       - develop
       - master
-
+  release:
+    types: # This configuration does not affect the page_build event above
+      - created
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -141,6 +143,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: svalinn-plugin_${{ matrix.os }}_cubit_${{ matrix.cubit }}.tgz
-          path: |
-            /home/runner/work/Trelis-plugin/pack/
-            /Users/runner/work/Trelis-plugin/pack/
+          path: /
+    
+      - if: github.event_name == 'release'
+        name: Upload the artifacts
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: '/svalinn-plugin_${{ matrix.os }}_cubit_${{ matrix.cubit }}.tgz'
