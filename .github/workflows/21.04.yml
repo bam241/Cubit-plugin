@@ -32,7 +32,6 @@ jobs:
         - image: [debian:10.10]
           os: [debian-10.10]
    
-
     name: 'Cubit Svalinn Plugin ${{ matrix.cubit }} Build for ${{ matrix.os }}'
 
     container:
